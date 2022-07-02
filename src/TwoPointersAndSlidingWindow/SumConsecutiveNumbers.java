@@ -19,16 +19,16 @@ public class SumConsecutiveNumbers {
         int answer = 0;
 
         int sum = 0;
-        int front = 0, rear = 1;
-        sum += input[front];
-        while (rear < n && front <= rear) {
-            if (sum == m) {
-                answer++;
-                sum += input[rear++];
-                sum -= input[front++];
-            } else if (sum < m) {
-                sum += input[rear++];
-            } else sum -= input[front++];
+        int lp = 0;
+        for (int rp = 0; rp<n; rp++) {
+            sum += input[rp];
+            if (sum == m) answer++;
+            else if (sum > m) {
+                while (sum > m) {
+                    sum -= input[lp++];
+                }
+                if (sum == m) answer++;
+            }
         }
 
         return answer;
