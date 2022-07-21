@@ -7,7 +7,7 @@ public class SumOfConsecutiveNumbers {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int n = scanner.nextInt();
-        System.out.println(SumOfConsecutiveNumbers.solution(n));
+        System.out.println(SumOfConsecutiveNumbers.solution2(n));
     }
 
     private static int solution(int n) {
@@ -29,6 +29,18 @@ public class SumOfConsecutiveNumbers {
             }
         }
         answer -= 1;
+        return answer;
+    }
+
+    private static int solution2(int n) {
+        int answer = 0;
+
+        int remained = n - 1;
+        for (int i=2; i<=n; i++) {
+            remained -= i;
+            if (remained >= 0 && (remained % i) == 0) answer++;
+        }
+
         return answer;
     }
 }
