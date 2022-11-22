@@ -9,7 +9,7 @@ public class Anagram {
         Scanner scanner = new Scanner(System.in);
         String str_1 = scanner.next();
         String str_2 = scanner.next();
-        System.out.println(Anagram.solution(str_1, str_2));
+        System.out.println(Anagram.solution2(str_1, str_2));
     }
 
     private static String solution(String str_1, String str_2) {
@@ -33,6 +33,33 @@ public class Anagram {
 
             if (map_1.equals(map_2)) answer = "YES";
         }
+        return answer;
+    }
+
+    private static String solution2(String str1, String str2) {
+        String answer = "NO";
+
+        char[] arr1 = str1.toCharArray();
+        char[] arr2 = str2.toCharArray();
+        HashMap<Character, Integer> map1 = new HashMap<>();
+        HashMap<Character, Integer> map2 = new HashMap<>();
+
+        for (char val : arr1) {
+            if (!map1.containsKey(val)) map1.put(val, 0);
+            map1.replace(val, map1.get(val) + 1);
+        }
+        for (char val : arr2) {
+            if (!map2.containsKey(val)) map2.put(val, 0);
+            map2.replace(val, map2.get(val) + 1);
+        }
+
+        if (map1.keySet().size() == map2.keySet().size()) {
+            for (char key : map1.keySet()) {
+                if (map1.get(key) != map2.get(key)) return answer;
+            }
+            answer = "YES";
+        }
+
         return answer;
     }
 }
