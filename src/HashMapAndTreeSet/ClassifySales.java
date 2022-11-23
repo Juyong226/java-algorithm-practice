@@ -14,7 +14,7 @@ public class ClassifySales {
         for (int i=0; i<n; i++) {
             input[i] = scanner.nextInt();
         }
-        for (int x : ClassifySales.solution(n, k, input)) {
+        for (int x : ClassifySales.solution2(n, k, input)) {
             System.out.print(x + " ");
         }
     }
@@ -48,6 +48,27 @@ public class ClassifySales {
         }
         answer.add(map.size());
 
+        return answer;
+    }
+
+    private static int[] solution2(int n, int k, int[] arr) {
+        int[] answer = new int[n-k+1];
+
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for(int i=0; i<k; i++) {
+            map.put(arr[i], map.getOrDefault(arr[i], 0) + 1);
+        }
+        answer[0] = map.keySet().size();
+
+        int lp = 0;
+        for (int rp=k; rp<n; rp++) {
+            map.replace(arr[lp], map.get(arr[lp]) -1);
+            if (map.get(arr[lp++]) == 0) map.remove(arr[lp - 1]);
+
+            map.put(arr[rp], map.getOrDefault(arr[rp], 0) + 1);
+
+            answer[lp] = map.keySet().size();
+        }
         return answer;
     }
 }
