@@ -9,7 +9,7 @@ public class CountAllAnagram {
         Scanner scanner = new Scanner(System.in);
         String pool = scanner.next();
         String target = scanner.next();
-        System.out.println(CountAllAnagram.solution(pool, target));
+        System.out.println(CountAllAnagram.solution2(pool, target));
     }
 
     private static int solution(String pool, String target) {
@@ -45,6 +45,38 @@ public class CountAllAnagram {
         }
         if (original.equals(temp_map)) answer++;
 
+        return answer;
+    }
+
+    private static int solution2(String pool, String target) {
+        int answer = 0;
+
+        HashMap<Character, Integer> tempMap = new HashMap<>();
+        HashMap<Character, Integer> targetMap = new HashMap<>();
+
+        for (int i=0; i<target.length(); i++) {
+            char temp = target.charAt(i);
+            targetMap.put(temp, targetMap.getOrDefault(temp, 0) + 1);
+        }
+
+        int lp = 0;
+        char temp;
+        for (int rp=0; rp<pool.length(); rp++) {
+            while (rp < target.length()) {
+                temp = pool.charAt(rp);
+                tempMap.put(temp, tempMap.getOrDefault(temp, 0) + 1);
+                if (rp == target.length() -1) {
+                    if (targetMap.equals(tempMap)) answer++;
+                }
+                rp++;
+            }
+            temp = pool.charAt(rp);
+            tempMap.put(temp, tempMap.getOrDefault(temp, 0) + 1);
+            temp = pool.charAt(lp++);
+            tempMap.put(temp, tempMap.get(temp) - 1);
+            if (tempMap.get(temp) == 0) tempMap.remove(temp);
+            if (targetMap.equals(tempMap)) answer++;
+        }
         return answer;
     }
 }
